@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Contents</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"	href="../Css/bootstrap.min.css">
+<script type="text/javascript" src="../corejs/jquery.min.js"></script>
+<script type="text/javascript" src="../corejs/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+<style type="text/css">
+.bg-company-red {
+	background-color: #F5F5F5 !important;
+}
+
+.jumbotron {
+	background: url(../images/jumbotronbg.jpg) fixed center no-repeat;
+	background-size: cover;
+	background-color: transparent;
+}
+
+.bg {
+	background-image: url("../images/contents.jpg");
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.modal-header {
+	background-color: #6CA3DA;
+}
+
+.modal-content {
+	overflow: hidden;
+}
+</style>
+</head>
+<body class="bg">
+
+	<nav class="navbar navbar-expand-sm bg-light">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="Welcome.html">Home</a></li>
+			<!-- <li class="nav-item"><a class="nav-link" href="#Quiz.html">Take Quiz</a></li> -->
+		</ul>
+		<button type="button" class="btn btn-primary btn-sm mr-1"
+			data-toggle="modal" data-target="#quizChoiceModal">Take Quiz</button>
+		<button type="button" class="btn btn-primary btn-sm"
+			data-toggle="modal" data-target="#myModal">About Genetics</button>
+	</nav>
+
+
+
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">About Genetics</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body" style="text-align: justify;">Genetics
+					is the study of genes, and tries to explain what they are and how
+					they work. Genes are how living organisms inherit features or
+					traits from their ancestors; for example, children usually look
+					like their parents because they have inherited their parents'
+					genes. Genetics tries to identify which traits are inherited, and
+					explain how these traits are passed from generation to generation.
+					Some traits are part of an organisms' physical appearance; such as
+					a person's eye-color, height or weight. Other sorts of traits are
+					not easily seen and include blood types or resistance to diseases.
+					Some traits are inherited through our genes, so tall and thin
+					people tend to have tall and thin children. Other traits come from
+					interactions between our genes and the environment, so a child
+					might inherit the tendency to be tall, but if they are poorly
+					nourished, they will still be short. The way our genes and
+					environment interact to produce a trait can be complicated. For
+					example, the chances of somebody dying of cancer or heart disease
+					seems to depend on both their genes and their lifestyle. Genes are
+					made from a long molecule called DNA, which is copied and inherited
+					across generations. DNA is made of simple units that line up in a
+					particular order within this large molecule. The order of these
+					units carries genetic information, similar to how the order of
+					letters on a page carry information. The language used by DNA is
+					called the genetic code, which lets organisms read the information
+					in the genes. This information is the instructions for constructing
+					and operating a living organism. The information within a
+					particular gene is not always exactly the same between one organism
+					and another, so different copies of a gene do not always give
+					exactly the same instructions. Each unique form of a single gene is
+					called an allele. As an example, one allele for the gene for hair
+					color could instruct the body to produce a lot of pigment,
+					producing black hair, while a different allele of the same gene
+					might give garbled instructions that fail to produce any pigment,
+					giving white hair. Mutations are random changes in genes, and can
+					create new alleles. Mutations can also produce new traits, such as
+					when mutations to an allele for black hair produce a new allele for
+					white hair. This appearance of new traits is important in
+					evolution.</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="quizChoiceModal">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Select One of them to proceed further</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body" style="text-align: justify;">
+
+					<label class="radio-inline"> <input type="radio"
+						name="inlineRadioOptions" id="inlineRadio1" value="option1">
+						1.Easy
+					</label> <label class="radio-inline"> <input type="radio"
+						name="inlineRadioOptions" id="inlineRadio2" value="option2">
+						2.Medium
+					</label> <label class="radio-inline"> <input type="radio"
+						name="inlineRadioOptions" id="inlineRadio3" value="option3">
+						3.Hard
+					</label>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<input type="submit" value="Proceed" id="submit" name="submit"
+							class="btn btn-primary" onclick="sendData()"">
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script type="text/javascript">
+		function sendData() {
+			var chk = document
+					.querySelector('input[name="inlineRadioOptions"]:checked').value;
+
+			$('#quizChoiceModal').modal('hide');
+			localStorage.setItem("opv", chk);
+			window.location = '../html/Quiz.html';
+
+		}
+	</script>
+
+
+</body>
+</html>

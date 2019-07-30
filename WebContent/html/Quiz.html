@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Quiz</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"	href="../Css/bootstrap.min.css">
+
+
+
+<script type="text/javascript" src="../js/QuestionConfig.js"></script>
+<script type="text/javascript" src="../corejs/jquery.min.js"></script>
+<script type="text/javascript" src="../corejs/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../corejs/sweetalert2.all.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
+
+
+<style type="text/css">
+.bg {
+	background-image: url("../images/background.jpg");
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.modal-content {
+	background-color: #9FCBF7;
+	-webkit-border-radius: 0px !important;
+	-moz-border-radius: 0px !important;
+	border-radius: 0px !important;
+}
+
+figure {
+	padding-top: 36.56%; /* 702px/1920px = 0.3656 */
+	display: block;
+	background: url("https://st.fl.ru/images/landing/bg2.jpg") no-repeat
+		center top;
+	background-size: cover;
+	text-align: center;
+	position: relative;
+}
+
+.modal-header {
+	padding: 9px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #0480be;
+}
+</style>
+</head>
+<body class="bg" onload="test()">
+
+	<div class="container" id="con"></div>
+
+	<script type="text/javascript">
+		var opv;
+		var noOfques;
+		var answerarr = [];
+		var quesarr = [];
+		var correctarr = [];
+		var submittedarr = [];
+		var anscounter = 0;
+		var quescounter = 0;
+		var marksecured = 0;
+		var finalresultcount = 0;
+		var mark = 0;
+		var totalmark = 0;
+
+		function test() {
+			opv = localStorage.getItem("opv");
+			noOfques = getquestions(opv);
+			mark = getMarks(opv);
+			totalmark = mark * noOfques;
+			for (var i = 1; i <= noOfques; i++) {
+				var questionObj = getData(i, opv);
+				quesarr.push(questionObj.question);
+				correctarr.push(questionObj.correct);
+				for ( var j in questionObj.answers) {
+					answerarr.push(questionObj.answers[j]);
+				}
+			}
+
+			createquiz();
+
+		}
+
+		function createquiz() {
+
+			if (noOfques != 0) {
+				CreateModal(quesarr[quescounter], answerarr[anscounter],
+						answerarr[anscounter + 1]);
+			} else {
+				//console.log(correctarr);
+				//console.log(submittedarr);
+
+				for (var i = 0; i < correctarr.length; i++) {
+					if (correctarr[i] == submittedarr[i]) {
+						finalresultcount = finalresultcount + 1;
+					}
+				}
+
+				//alert("MarkSecured"+finalresultcount*mark);	
+				//alert("TotalMark"+totalmark);
+				swal({
+					text : 'You scored  ' + finalresultcount * mark
+							+ ' out of  ' + totalmark,
+					type : 'success',
+				})
+
+				document.getElementById("con").innerHTML = '<p class="lead"> GO BACK TO HOME PAGE  <a class="btn btn-primary btn-md" href="Welcome.html" role="button">HOME</a></p>';
+				/* 
+				addpass(finalresultcount*mark); */
+
+			}
+
+		}
+
+		/* function addpass(latlon) 
+		 {           
+		 alert(latlon);
+
+		
+		
+		
+		 var arr = {k:'latlon'};
+		 $.ajax({
+		 url: "http://localhost:3030/GeneticsApp/InsertPos",
+		 type: "POST",
+		 data: JSON.stringify(arr),
+		 async: false,
+		 contentType: 'application/json; charset=utf-8',
+		 async: false,
+		 success: function(msg) {
+		 alert(msg);
+		 }
+		 });
+		 } */
+
+		function CreateModal(quesarr, answer1, answer2, counter) {
+
+			var modaldialog = document.createElement("div");
+
+			modaldialog.setAttribute('class', 'modal-dialog modal-md');
+
+			var modalcontent = document.createElement('div');
+			modalcontent.setAttribute('class', 'modal-content');
+
+			var modalheader = document.createElement('div');
+			modalheader.setAttribute('class', 'modal-header');
+
+			var h5 = document.createElement('h5');
+			h5.innerHTML = quesarr;
+
+			var quizdiv = document.createElement('div');
+			quizdiv.setAttribute('class', 'quiz');
+
+			/* var radioInput1 = document.createElement('input');
+			//radioInput1.innerHTML='1'+" <br /> " ;
+			radioInput1.setAttribute('type', 'radio');
+			radioInput1.setAttribute('name', 'q_answer');
+			radioInput1.setAttribute('value', '1'); */
+
+			var quizdiv1 = document.createElement('div');
+			var label1 = document.createElement("label");
+			var radio1 = document.createElement("input");
+			radio1.type = "radio";
+			radio1.name = "ques";
+			radio1.value = answer1;
+			radio1.required = "required";
+			label1.appendChild(radio1);
+			label1.appendChild(document.createTextNode(answer1));
+			quizdiv1.appendChild(label1);
+
+			var quizdiv2 = document.createElement('div');
+			var label2 = document.createElement("label");
+			var radio2 = document.createElement("input");
+			radio2.type = "radio";
+			radio2.name = "ques";
+			radio2.value = answer2;
+			label2.appendChild(radio2);
+			label2.appendChild(document.createTextNode(answer2));
+			quizdiv2.appendChild(label2);
+
+			/*     var quizdiv3=document.createElement('div');
+			 var label3 = document.createElement("label");
+			 var radio3 = document.createElement("input");
+			 radio3.type = "radio";
+			 radio3.name = "ques";
+			 radio3.value = answer3;
+			 label3.appendChild(radio3);
+			 label3.appendChild(document.createTextNode(answer3));
+			 quizdiv3.appendChild(label3);
+			
+			
+			
+			 var quizdiv4=document.createElement('div');
+			 var label4 = document.createElement("label");
+			 var radio4 = document.createElement("input");
+			 radio4.type = "radio";
+			 radio4.name = "ques";
+			 radio4.value = answer4;
+			 label4.appendChild(radio4);
+			 label4.appendChild(document.createTextNode(answer4));
+			 quizdiv4.appendChild(label4); */
+
+			var modalfooter = document.createElement('div');
+			modalfooter.setAttribute('class', 'modal-footer');
+
+			var btn = document.createElement('button');
+			btn.setAttribute('type', 'button');
+			btn.setAttribute('class', 'btn btn-primary');
+			btn.setAttribute('onclick', 'checkSelected()');
+			btn.innerHTML = 'NEXT';
+
+			var mybr = document.createElement('br');
+
+			modalfooter.appendChild(btn);
+
+			quizdiv.appendChild(quizdiv1);
+
+			quizdiv.appendChild(quizdiv2);
+
+			/* 
+				quizdiv.appendChild(quizdiv3);
+				
+				
+					quizdiv.appendChild(quizdiv4); */
+
+			modalheader.appendChild(h5);
+
+			modalcontent.appendChild(modalheader);
+			modalcontent.appendChild(quizdiv);
+			modalcontent.appendChild(modalfooter);
+
+			modaldialog.appendChild(modalcontent);
+
+			document.getElementById('con').appendChild(modaldialog);
+
+		}
+
+		function checkSelected() {
+
+			var len = document.querySelectorAll('input[name = "ques"]:checked').length;
+
+			if (len > 0) {
+
+				val = document.querySelector('input[name = "ques"]:checked').value
+				submittedarr.push(val);
+				//alert("val"+val);
+				//alert("counter"+counter);
+				document.getElementById("con").innerHTML = "";
+				noOfques = noOfques - 1;
+				quescounter = quescounter + 1
+				anscounter = anscounter + 2;
+				createquiz();
+
+			} else {
+				//alert("Please Select one of the options");
+				swal({
+					text : 'Please select atleast one option to proceed',
+					type : 'warning',
+				})
+
+			}
+		}
+	</script>
+</body>
+</html>
